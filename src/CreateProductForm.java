@@ -14,13 +14,20 @@ public class CreateProductForm {
     private JTextField expectedDeliveryDateTextField;
     private JTextField orderDateTextField;
     private JTextField receivedByTextField;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField codeTextField;
+    private JTextField quantityTextField;
+    private JTextField notesTextField;
     private JTextArea descriptionTextArea;
     private JTextArea instructionsTextArea;
-    private JTextField textField5;
-    private JComboBox DesignCompletedComboBox;
+    private JComboBox comboBox1;
+    private JComboBox comboBox2;
+    private JTextField designByDateTextField;
+    private JComboBox comboBox3;
+    private JTextField spellCheckedDateTextField;
+    private JTextField productionDateTextField;
+    private JButton cancelButton;
+    private JButton submitButton;
+    private JButton addNewFieldsButton;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here

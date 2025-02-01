@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,23 +25,13 @@ public class AddCustomerForm extends JDialog {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                createCustomer();
-            }
-        });
+        cancelButton.addActionListener((event) -> dispose());
+        submitButton.addActionListener((event) -> createCustomer());
         setVisible(true);
     }
 
-    private void cancelActivity() {
-    }
+    /*private void cancelActivity() {
+    }*/
 
     private void createCustomer() {
         String businessName = business.getText();
@@ -139,18 +127,18 @@ public class AddCustomerForm extends JDialog {
 
     public boolean testUsingStrictRegex(String emailAddress) {
         //emailAddress = "username@domain.com";
-        String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        String regexPattern = "^(?=.{1,64}@)[A-Za-z\\d_-]+(\\.[A-Za-z\\d_-]+)*@"
+                + "[^-][A-Za-z\\d-]+(\\.[A-Za-z\\d-]+)*(\\.[A-Za-z]{2,})$";
         return Pattern.compile(regexPattern)
                 .matcher(emailAddress)
                 .matches();
     }
 
-    public static boolean patternMatches(String emailAddress, String regexPattern) {
+    /*public static boolean patternMatches(String emailAddress, String regexPattern) {
         return Pattern.compile(regexPattern)
                 .matcher(emailAddress)
                 .matches();
-    }
+    }*/
 
     public static void main(String[] args) {
         AddCustomerForm custForm = new AddCustomerForm(null);

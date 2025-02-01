@@ -16,7 +16,7 @@ public class AddCustomerForm extends JDialog {
     private JTextField cellular;
     private JButton cancelButton;
     private JButton submitButton;
-    private JPanel customerPanel;
+   private JPanel customerPanel;
 
     public AddCustomerForm(JFrame parent) {
         super(parent);

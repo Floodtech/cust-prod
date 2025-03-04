@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="CreateProductForm">
-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="8" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="productPanel" layout-manager="GridLayoutManager" row-count="8" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="782" height="439"/>
+      <xy x="20" y="20" width="634" height="439"/>
     </constraints>
     <properties>
       <background color="-1"/>
@@ -20,7 +20,7 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="7efc9" class="javax.swing.JTextField" binding="expectedDeliveryDateTextField" default-binding="true">
+      <component id="7efc9" class="javax.swing.JTextField" binding="expectedDeliveryDate">
         <constraints>
           <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -32,18 +32,7 @@
           <toolTipText value=""/>
         </properties>
       </component>
-      <component id="7e504" class="javax.swing.JTextField" binding="orderDateTextField" default-binding="true">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <font name="Droid Sans Mono Slashed" size="14" style="0"/>
-          <text value="Order Date"/>
-        </properties>
-      </component>
-      <component id="7612e" class="javax.swing.JTextField" binding="codeTextField" default-binding="true">
+      <component id="7612e" class="javax.swing.JTextField" binding="productCodeText">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -51,10 +40,10 @@
         </constraints>
         <properties>
           <font name="Droid Sans Mono Slashed" size="14" style="0"/>
-          <text value="Code"/>
+          <text value="Product Code"/>
         </properties>
       </component>
-      <component id="23d91" class="javax.swing.JTextField" binding="notesTextField" default-binding="true">
+      <component id="23d91" class="javax.swing.JTextField" binding="notes">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -65,7 +54,7 @@
           <text value="Notes"/>
         </properties>
       </component>
-      <component id="f7e07" class="javax.swing.JTextArea" binding="descriptionTextArea">
+      <component id="f7e07" class="javax.swing.JTextArea" binding="description">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="4" vsize-policy="2" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
@@ -76,7 +65,7 @@
           <text value="Description"/>
         </properties>
       </component>
-      <component id="55c24" class="javax.swing.JTextArea" binding="instructionsTextArea" default-binding="true">
+      <component id="55c24" class="javax.swing.JTextArea" binding="instructions">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
@@ -87,7 +76,7 @@
           <text value="Instructions"/>
         </properties>
       </component>
-      <component id="8969a" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+      <component id="8969a" class="javax.swing.JComboBox" binding="productionSignature">
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -95,13 +84,13 @@
           <model/>
         </properties>
       </component>
-      <component id="7e0b0" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
+      <component id="7e0b0" class="javax.swing.JComboBox" binding="designBySignature">
         <constraints>
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
-      <component id="2ef82" class="javax.swing.JTextField" binding="designByDateTextField" default-binding="true">
+      <component id="2ef82" class="javax.swing.JTextField" binding="designByDate">
         <constraints>
           <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -112,13 +101,13 @@
           <text value="Design By Date"/>
         </properties>
       </component>
-      <component id="4729a" class="javax.swing.JComboBox" binding="comboBox3" default-binding="true">
+      <component id="4729a" class="javax.swing.JComboBox" binding="spellCheckedSignature">
         <constraints>
           <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
-      <component id="727aa" class="javax.swing.JTextField" binding="spellCheckedDateTextField" default-binding="true">
+      <component id="727aa" class="javax.swing.JTextField" binding="spellCheckedDate">
         <constraints>
           <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -163,7 +152,7 @@
           </component>
         </children>
       </scrollpane>
-      <component id="1f86c" class="javax.swing.JTextField" binding="productionDateTextField" default-binding="true">
+      <component id="1f86c" class="javax.swing.JTextField" binding="productionDate">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -174,7 +163,7 @@
           <text value="Production Date"/>
         </properties>
       </component>
-      <component id="45df5" class="javax.swing.JTextField" binding="quantityTextField" default-binding="true">
+      <component id="45df5" class="javax.swing.JTextField" binding="quantity">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -183,17 +172,6 @@
         <properties>
           <font name="Droid Sans Mono Slashed" size="14" style="0"/>
           <text value="Quantity"/>
-        </properties>
-      </component>
-      <component id="58b12" class="javax.swing.JTextField" binding="receivedByTextField" default-binding="true">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <font name="Droid Sans Mono Slashed" size="14" style="0"/>
-          <text value="Received By "/>
         </properties>
       </component>
       <component id="6e1f3" class="javax.swing.JButton" binding="addNewFieldsButton" default-binding="true">
@@ -224,6 +202,39 @@
           </component>
         </children>
       </scrollpane>
+      <component id="58b12" class="javax.swing.JTextField" binding="receivedBy">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Droid Sans Mono Slashed" size="14" style="0"/>
+          <text value="Received By "/>
+        </properties>
+      </component>
+      <component id="7e504" class="javax.swing.JTextField" binding="orderDateText" custom-create="true">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Droid Sans Mono Slashed" size="14" style="0"/>
+          <text value="Order Date"/>
+        </properties>
+      </component>
+      <component id="b880b" class="javax.swing.JTextField" binding="orderCodeText">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Droid Sans Mono Slashed" size="14" style="0"/>
+          <text value="Order Code"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

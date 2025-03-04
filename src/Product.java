@@ -1,10 +1,12 @@
 public class Product {
-    public String orderDate;
-    public String orderReceivedBy;
+
+    public String receivedByDate;
+    public String requiredByDate;
     public String expectedDeliveryDate;
     public String orderCode;
+    public String productCode;
     public String quantity;
-    public String orderNotes;
+    public String productNotes;
     public String description;
     public String instructions;
     public String designedBy;
@@ -13,6 +15,4 @@ public class Product {
     public String spellCheckedByDate;
     public String production;
     public String productionDate;
-    public String orderCompleted;
-    public String orderCompletedDate;
 }

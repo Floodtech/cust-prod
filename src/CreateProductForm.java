@@ -217,7 +217,7 @@ public class CreateProductForm extends JDialog {
             Statement stmt = conn.createStatement();
             String sql = "INSERT INTO products (expDelDate, orderDate, receivedBy, productCode, quantity, notes, desc, " +
                     "instructions, prodSig, designBySig, spellCheckSig, spellCheckDate, designByDate, productionDate, orderCode) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1,expDelDate);
             preparedStatement.setString(2,orderDate);

@@ -29,6 +29,22 @@ public class CreateProductForm extends JDialog {
     private JButton cancelButton;
     private JButton submitButton;
     private JButton addNewFieldsButton;
+    private JPanel panel1;
+    private JTextArea instructionsTextArea;
+    private JTextArea notesTextArea;
+    private JTextArea descriptionTextArea;
+    private JComboBox comboBox1;
+    private JComboBox comboBox2;
+    private JTextField designByDateTextField;
+    private JComboBox comboBox3;
+    private JTextField spellCheckedDateTextField;
+    private JTextField productionDateTextField;
+    private JTextField expectedDeliveryDateTextField;
+    private JTextField orderDateTextField;
+    private JTextField codeTextField;
+    private JTextField quantityTextField;
+    private JTextField receivedByTextField;
+    private JTextField notesTextField;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
@@ -47,7 +63,7 @@ public class CreateProductForm extends JDialog {
         super(parent);
         setTitle("Create a new Product");
         setContentPane(productPanel);
-        setMinimumSize(new Dimension(500, 650));
+        setMinimumSize(new Dimension(1100, 800));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

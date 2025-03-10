@@ -1,4 +1,8 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,56 +11,68 @@ import java.sql.Statement;
 import java.util.Objects;
 
 public class CreateOrderForm extends JDialog{
-    private JPanel orderPanel;
-    private JTextField orderReferenceNumberText;
-    private JTextField orderDateText;
-    private JTextField scheduledDeliveryDateText;
-    private JComboBox<String> orderReceivedBySelection;
-    private JComboBox<String> customerNameSelection;
-    private JTextField customerReferenceNumberText;
-    private JTextField productReferenceNumberText;
-    private JTextField orderStatusText;
-    private JTextArea orderInstructionsText;
-    private JComboBox<String> orderCompletedBySignatureSelection;
-    private JTextField orderCompletedDateText;
-    private JTextField productCodeText;
-    private JTextField productQuantityText;
-    private JTextField productDescriptionText;
-    private JTextField productNotesText;
-    private JButton addProductButton;
+    private JPanel rootPanel;
     private JButton cancelButton;
-    private JButton submitButton;
+    private JButton addButton;
+    private JButton saveButton;
+    private JLabel formName;
+    private JLabel referenceNumberLabel;
+    private JLabel datePlacedLabel;
+    private JLabel deliveryDateLabel;
+    private JLabel statusLabel;
+    private JLabel instructionLabel;
+    private JLabel productCodeLabel;
+    private JLabel quantityLabel;
+    private JLabel descLabel;
+    private JLabel notesLabel;
+    private JLabel prodStatusLabel;
+    private JTextField refNumField;
+    private JTextField plannedDateField;
+    private JTextField statusField;
+    private JTextField prodCodeField;
+    private JTextField quantityField;
+    private JTextArea descArea;
+    private JTextArea notesArea;
+    private JTextArea instructionArea;
+    private JComboBox employee1Box;
+    private JComboBox customerBox;
+    private JComboBox employee2Box;
+    private JComboBox prodStatusBox;
+    private JTable productListTable;
+
 
     public CreateOrderForm(JFrame parent) {
         super(parent);
         setTitle("Create a new Order");
-        setContentPane(orderPanel);
-        setMinimumSize(new Dimension(500, 650));
+        setContentPane(rootPanel);
+        setMinimumSize(new Dimension(1100, 800));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
         cancelButton.addActionListener((event) -> dispose());
-        submitButton.addActionListener((event) -> createOrder());
+        saveButton.addActionListener((event) -> createOrder());
+        showTable();
         setVisible(true);
+
+
     }
 
     public void createOrder() {
-        String orderReferenceNumber = orderReferenceNumberText.getText();
-        String orderDate = orderDateText.getText();
-        String scheduledDeliveryDate = scheduledDeliveryDateText.getText();
-        String orderReceivedBySignature = (String) orderReceivedBySelection.getSelectedItem();
-        String customerName = (String) customerNameSelection.getSelectedItem();
-        String customerReferenceNumber = customerReferenceNumberText.getText();
-        String productReferenceNumber = productReferenceNumberText.getText();
-        String orderStatus = orderStatusText.getText();
-        String orderInstructions = orderInstructionsText.getText();
-        String orderCompletedBySignature = (String) orderCompletedBySignatureSelection.getSelectedItem();
-        String orderCompletedDate = orderCompletedDateText.getText();
-        String productCode = productCodeText.getText();
-        String productQuantity = productQuantityText.getText();
-        String productDescription = productDescriptionText.getText();
-        String productNotes = productNotesText.getText();
+        String orderReferenceNumber = refNumField.getText();
+        String orderDate = null;
+        String scheduledDeliveryDate = plannedDateField.getText();
+        String orderReceivedBySignature = (String) null;
+        String customerName = (String) customerBox.getSelectedItem();
+        String customerReferenceNumber = null;
+        String productReferenceNumber = null;
+        String orderStatus = statusField.getText();
+        String orderInstructions = instructionArea.getText();
+        String orderCompletedBySignature = (String) null;
+        String orderCompletedDate = null;
+        String productCode = prodCodeField.getText();
+        String productQuantity = quantityField.getText();
+        String productDescription = descArea.getText();
+        String productNotes = notesArea.getText();
 
         //Input validations / regulatory expressions
         if (orderReferenceNumber.isEmpty()){
@@ -222,6 +238,37 @@ public class CreateOrderForm extends JDialog{
         return order;
     }
 
+    private void showTable(){
+        Object[][] data = {
+                {"P001", 10, "Product 1 Description", "Notes 1", "With Designer"},
+                {"P002", 5, "Product 2 Description", "Notes 2", "Production"},
+                {"P003", 8, "Product 3 Description", "Notes 3", "With Spell Checker"},
+                {"P004", 12, "Product 4 Description", "Notes 4", "Completed"}
+        };
+
+        // Column names
+        String[] columnNames = {"Product Code", "Quantity", "Description", "Notes", "Status"};
+
+        // Set the model with dummy data
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        productListTable.setModel(model);
+        TableColumnModel columns = productListTable.getColumnModel () ;
+        columns.getColumn (2).setMinWidth (250) ;
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer ();
+        centerRenderer.setHorizontalAlignment (JLabel. CENTER) ;
+        columns.getColumn (0).setCellRenderer (centerRenderer);
+        columns.getColumn (1).setCellRenderer (centerRenderer);
+        columns.getColumn (4).setCellRenderer (centerRenderer);
+        // Set table header alignment to center
+        JTableHeader tableHeader = productListTable.getTableHeader();
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tableHeader.getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setFont(new Font("Arial", Font.BOLD, 23));
+
+    }
+
+
+
     public static void main(String[] args) {
         CreateOrderForm orderForm = new CreateOrderForm(null);
         Order order = orderForm.order;
@@ -233,5 +280,7 @@ public class CreateOrderForm extends JDialog{
     }
 
 
-
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 }

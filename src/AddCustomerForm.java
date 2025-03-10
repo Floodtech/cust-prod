@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,11 +19,12 @@ public class AddCustomerForm extends JDialog {
     private JButton submitButton;
    private JPanel customerPanel;
 
+    //Change font size
     public AddCustomerForm(JFrame parent) {
         super(parent);
         setTitle("Create a new customer");
         setContentPane(customerPanel);
-        setMinimumSize(new Dimension(650, 500));
+        setMinimumSize(new Dimension(1100, 800));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

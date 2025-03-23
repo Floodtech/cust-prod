@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,14 +15,15 @@ public class AddCustomerForm extends JDialog {
     private JTextField telephone;
     private JTextField cellular;
     private JButton cancelButton;
-    private JButton submitButton;
-   private JPanel customerPanel;
+    private JButton saveButton;
+    private JPanel rootPanel;
+
 
     //Change font size
     public AddCustomerForm(JFrame parent) {
         super(parent);
         setTitle("Create a new customer");
-        setContentPane(customerPanel);
+        setContentPane(rootPanel);
         setMinimumSize(new Dimension(1100, 800));
         setModal(true);
         setLocationRelativeTo(parent);
@@ -35,7 +35,7 @@ public class AddCustomerForm extends JDialog {
                 dispose();
             }
         });
-        submitButton.addActionListener(new ActionListener() {
+        saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 createCustomer();
@@ -164,5 +164,9 @@ public class AddCustomerForm extends JDialog {
             System.out.println("Customer Creation Canceled");
         }
         //CreateProductForm productForm = new CreateProductForm();
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

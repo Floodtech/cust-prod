@@ -270,6 +270,19 @@ public class CreateOrderForm extends JDialog{
 
 
     public static void main(String[] args) {
+        // Set the Look and Feel (L&F) of UI
+        String guiDesign = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
+        //Nimbus Look and Feel: "javax.swing.plaf.nimbus.NimbusLookAndFeel"
+        //Cross-platform (Metal): "javax.swing.plaf.metal.MetalLookAndFeel"
+        //Windows (Windows look): "com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
+        //Mac OS X Aqua (for Mac users): "com.apple.laf.AquaLookAndFeel"
+        //Motif: "com.sun.java.swing.plaf.motif.MotifLookAndFeel"
+        try {
+            UIManager.setLookAndFeel(guiDesign);
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         CreateOrderForm orderForm = new CreateOrderForm(null);
         Order order = orderForm.order;
         if (order != null){

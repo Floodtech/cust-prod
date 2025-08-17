@@ -62,7 +62,7 @@ public class CreateProductForm extends JDialog {
     public CreateProductForm(JFrame parent){
         super(parent);
         setTitle("Create a new Product");
-        setContentPane(productPanel);
+        setContentPane(panel1);
         setMinimumSize(new Dimension(1100, 800));
         setModal(true);
         setLocationRelativeTo(parent);

@@ -103,7 +103,7 @@ public class AddCustomerForm extends JDialog {
     private Customer addCustomerToDatabase(String businessName, String contactName, String customerEmail,
                                            String customerTelNum, String customerCellNum) {
     Customer customer = null;
-    final String DB_URL ="jdbc:mysql://localhost/cps?serverTimezone=UTC-4";
+    final String DB_URL ="jdbc:mysql://localhost:3306/cps?useSSL=false&serverTimezone=UTC-4";
     final String USERNAME ="root";
     final String PASSWORD ="";
 

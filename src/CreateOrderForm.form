@@ -33,7 +33,7 @@
           </component>
         </children>
       </grid>
-      <grid id="3e21a" layout-manager="GridLayoutManager" row-count="5" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="3e21a" layout-manager="GridLayoutManager" row-count="5" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="10" bottom="0" right="10"/>
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -63,25 +63,6 @@
               <background color="-6775651"/>
             </properties>
           </component>
-          <component id="c0bf0" class="javax.swing.JLabel" binding="datePlacedLabel">
-            <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="Droid Sans Mono" size="15" style="0"/>
-              <text value="Date Placed"/>
-            </properties>
-          </component>
-          <component id="41b09" class="javax.swing.JLabel" binding="deliveryDateLabel">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="Droid Sans Mono" size="15" style="0"/>
-              <labelFor value="7ea87"/>
-              <text value="Scheduled Delivery Date"/>
-            </properties>
-          </component>
           <component id="39648" class="javax.swing.JLabel" binding="statusLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -90,16 +71,6 @@
               <font name="Droid Sans Mono" size="15" style="0"/>
               <labelFor value="3bbe2"/>
               <text value="Status"/>
-            </properties>
-          </component>
-          <component id="7ea87" class="javax.swing.JTextField" binding="plannedDateField">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <background color="-6775651"/>
             </properties>
           </component>
           <component id="3bbe2" class="javax.swing.JTextField" binding="statusField">
@@ -112,35 +83,17 @@
               <background color="-6775651"/>
             </properties>
           </component>
-          <component id="be230" class="javax.swing.JComboBox" binding="employee1Box">
-            <constraints>
-              <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <model>
-                <item value="---Select Employee---"/>
-                <item value="Employee 1"/>
-                <item value="Employee 2"/>
-                <item value="Employee 3"/>
-              </model>
-            </properties>
-          </component>
           <component id="11d80" class="javax.swing.JComboBox" binding="customerBox">
             <constraints>
-              <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <model>
-                <item value="---Select Customer---"/>
-                <item value="Customer 1"/>
-                <item value="Customer 2"/>
-                <item value="Customer 3"/>
-              </model>
+              <model/>
             </properties>
           </component>
           <component id="efd1a" class="javax.swing.JLabel" binding="instructionLabel">
             <constraints>
-              <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Droid Sans Mono" size="15" style="0"/>
@@ -148,24 +101,20 @@
               <text value="Order Instructions"/>
             </properties>
           </component>
-          <hspacer id="c611f">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </hspacer>
           <component id="28e4c" class="javax.swing.JButton" default-binding="true">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
                 <maximum-size width="90" height="-1"/>
               </grid>
             </constraints>
             <properties>
               <text value="Calendar"/>
+              <toolTipText value="Choose Date"/>
             </properties>
           </component>
           <scrollpane id="d5892">
             <constraints>
-              <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -180,6 +129,55 @@
               </component>
             </children>
           </scrollpane>
+          <component id="7ea87" class="javax.swing.JTextField" binding="plannedDateField">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-6775651"/>
+              <text value="Scheduled Delivery Date"/>
+              <toolTipText value="Enter Date (yyyy-mm-dd)"/>
+            </properties>
+          </component>
+          <component id="b3d4a" class="javax.swing.JButton" binding="calendarButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Calendar"/>
+              <toolTipText value="Choose Date"/>
+            </properties>
+          </component>
+          <component id="65f" class="javax.swing.JFormattedTextField" binding="orderDateTextField">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-6775651"/>
+              <text value="Order Date"/>
+              <toolTipText value="Enter Date (yyyy-mm-dd)"/>
+            </properties>
+          </component>
+          <component id="634ac" class="javax.swing.JLabel" binding="employee1Label">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Employee Name/Department"/>
+            </properties>
+          </component>
+          <component id="8fcbb" class="javax.swing.JTextField" binding="employee1Field">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-6775651"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="1ea0d" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -308,49 +306,13 @@
               <background color="-6775651"/>
             </properties>
           </component>
-          <component id="8d34a" class="javax.swing.JComboBox" binding="employee2Box">
-            <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <model>
-                <item value="---Select Employee---"/>
-                <item value="Employee 1"/>
-                <item value="Employee 2"/>
-                <item value="Employee 3"/>
-              </model>
-            </properties>
-          </component>
           <component id="dec80" class="javax.swing.JLabel" binding="prodStatusLabel">
             <constraints>
               <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Droid Sans Mono" size="15" style="0"/>
-              <labelFor value="ede2e"/>
               <text value="Status"/>
-            </properties>
-          </component>
-          <component id="8f147" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="3" column="6" row-span="1" col-span="1" vsize-policy="2" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="Droid Sans Mono" size="15" style="0"/>
-              <text value="Completed Date"/>
-            </properties>
-          </component>
-          <component id="ede2e" class="javax.swing.JComboBox" binding="prodStatusBox">
-            <constraints>
-              <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <model>
-                <item value="With Designer"/>
-                <item value="In-progress"/>
-                <item value="With Grafter"/>
-                <item value="Delivered"/>
-              </model>
             </properties>
           </component>
           <component id="d2492" class="javax.swing.JButton" binding="addButton" default-binding="true">
@@ -414,6 +376,49 @@
               </component>
             </children>
           </scrollpane>
+          <component id="a49c3" class="javax.swing.JTextField" binding="prodStatusField">
+            <constraints>
+              <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="-1"/>
+                <maximum-size width="100" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-6775651"/>
+            </properties>
+          </component>
+          <component id="d90cd" class="javax.swing.JLabel" binding="employee2Label">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Employee Name/Department"/>
+            </properties>
+          </component>
+          <component id="41960" class="javax.swing.JTextField" binding="employee2Field">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="-1"/>
+                <maximum-size width="100" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-6775651"/>
+            </properties>
+          </component>
+          <component id="866b0" class="javax.swing.JTextField" binding="orderCompletedDateField">
+            <constraints>
+              <grid row="3" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="100" height="-1"/>
+                <maximum-size width="100" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-6775651"/>
+              <text value="Order Completed Date"/>
+              <toolTipText value="Enter Date (yyyy-mm-dd)"/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>

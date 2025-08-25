@@ -4,11 +4,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Date;
 import java.util.Objects;
+import java.time.LocalDate;
+
 
 public class CreateOrderForm extends JDialog{
     private JPanel rootPanel;
@@ -17,8 +17,6 @@ public class CreateOrderForm extends JDialog{
     private JButton saveButton;
     private JLabel formName;
     private JLabel referenceNumberLabel;
-    private JLabel datePlacedLabel;
-    private JLabel deliveryDateLabel;
     private JLabel statusLabel;
     private JLabel instructionLabel;
     private JLabel productCodeLabel;
@@ -34,11 +32,18 @@ public class CreateOrderForm extends JDialog{
     private JTextArea descArea;
     private JTextArea notesArea;
     private JTextArea instructionArea;
-    private JComboBox employee1Box;
-    private JComboBox customerBox;
-    private JComboBox employee2Box;
-    private JComboBox prodStatusBox;
+    private JComboBox<String> customerBox;
+    private JComboBox<String> prodStatusBox;
     private JTable productListTable;
+    private JButton calendarButton;
+    //private DateChooser dateChooser = new DateChooser();
+    private JFormattedTextField orderDateTextField;
+    private JLabel employee1Label;
+    private JTextField employee1Field;
+    private JTextField prodStatusField;
+    private JLabel employee2Label;
+    private JTextField employee2Field;
+    private JTextField orderCompletedDateField;
 
 
     public CreateOrderForm(JFrame parent) {
@@ -49,41 +54,132 @@ public class CreateOrderForm extends JDialog{
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        createCustomerList();
+        LocalDate currentDate = LocalDate.now();
+        orderDateTextField.setText(currentDate.toString());
         cancelButton.addActionListener((event) -> dispose());
         saveButton.addActionListener((event) -> createOrder());
-        showTable();
+        addButton.addActionListener((event) -> createProduct());
+        refNumField.setEditable(false);
+
+        //showTable();
         setVisible(true);
-
-
     }
 
-    public void createOrder() {
+    public void createCustomerList() {
+        customerBox.insertItemAt("---Select Customer---", 0); // Inserts at the beginning
+        customerBox.setSelectedItem("---Select Customer---");
+
+        final String DB_URL ="jdbc:mysql://localhost/cps?serverTimezone=UTC-4";
+        final String USERNAME ="root";
+        final String PASSWORD ="";
+        ResultSet rs = null;
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            //Connected to database successfully
+
+            //Input data entered as SQL Statement
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT businessName FROM customers");
+            int count = 1;
+            while (rs.next()) { // Check if there's a row
+                String value1 = rs.getString("businessName");
+
+                // Populate your form fields (e.g., JTextField, JComboBox)
+                customerBox.insertItemAt(value1, count); // Adds each item
+                count++;
+                //System.out.println(value1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            try { if (rs != null) rs.close(); } catch (SQLException e) { /* log error */ }
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* log error */ }
+            try { if (conn != null) conn.close(); } catch (SQLException e) { /* log error */ }
+        }
+
+    }
+        public void createProduct() {
+            String productCode = prodCodeField.getText();
+            String productQuantity = quantityField.getText();
+            String productDescription = descArea.getText();
+            String productNotes = notesArea.getText();
+            String productStatus = prodStatusField.getText();
+
+            product = addProductToDatabase(productCode, productQuantity, productDescription, productNotes, productStatus);
+            if (product != null) {
+                System.out.println("Successfully created new product " + productCode);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Failed to create new product",
+                        "Try again",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
+
+        }
+        public Product product;
+
+        private Product addProductToDatabase(String productCode, String productQuantity, String productDescription,
+                                             String productNotes, String productStatus){
+
+            Product product = new Product();
+            final String DB_URL ="jdbc:mysql://localhost/cps?serverTimezone=UTC-4";
+            final String USERNAME ="root";
+            final String PASSWORD ="";
+
+            try {
+                Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+                //Connected to database successfully
+
+                //Input data entered as SQL Statement
+                Statement stmt = conn.createStatement();
+                String sql = "INSERT INTO products (productCode, orderReferenceNumber, quantity, description, notes, status) " +
+                        "VALUES (?,?,?,?,?,?) ";
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.setString(1,productCode);
+                preparedStatement.setString(2,"202500001");
+                preparedStatement.setInt(3,Integer.parseInt(productQuantity));
+                preparedStatement.setString(4,productDescription);
+                preparedStatement.setString(5,productNotes);
+                preparedStatement.setString(6,productStatus);
+
+                //Insert row into Table
+                int addedRows = preparedStatement.executeUpdate();
+                if (addedRows > 0){
+                    product.productCode = productCode;
+                    product.quantity = productQuantity;
+                    product.description = productDescription;
+                    product.productNotes = productNotes;
+                    product.status = productStatus;
+                }
+                stmt.close();
+                conn.close();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            showTable();
+            return product;
+        }
+
+        public void createOrder() {
         String orderReferenceNumber = refNumField.getText();
-        String orderDate = null;
+        String orderReceivedBySignature = employee1Field.getText();
+        String orderDate = orderDateTextField.getText();
         String scheduledDeliveryDate = plannedDateField.getText();
-        String orderReceivedBySignature = (String) null;
         String customerName = (String) customerBox.getSelectedItem();
-        String customerReferenceNumber = null;
-        String productReferenceNumber = null;
         String orderStatus = statusField.getText();
         String orderInstructions = instructionArea.getText();
-        String orderCompletedBySignature = (String) null;
-        String orderCompletedDate = null;
-        String productCode = prodCodeField.getText();
-        String productQuantity = quantityField.getText();
-        String productDescription = descArea.getText();
-        String productNotes = notesArea.getText();
+        String orderCompletedBySignature = employee2Field.getText();
+        String orderCompletedDate = orderDateTextField.getText();
 
         //Input validations / regulatory expressions
-        if (orderReferenceNumber.isEmpty()){
+        if (orderReceivedBySignature.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                    "Please enter expected delivery date",
-                    "Try again",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        } else if (orderDate.isEmpty()) { //Expand to check whether date is valid
-            JOptionPane.showMessageDialog(this,
-                    "Please enter a valid order date.",
+                    "Please enter employee name or department.",
                     "Try again",
                     JOptionPane.ERROR_MESSAGE);
             return;
@@ -93,55 +189,25 @@ public class CreateOrderForm extends JDialog{
                     "Try again",
                     JOptionPane.ERROR_MESSAGE);
             return;
-        }else if (orderReceivedBySignature!=null || Objects.equals(orderReceivedBySignature, "---Select Employee---")) {
-            JOptionPane.showMessageDialog(this,
-                    "Please confirm who received this order.",
-                    "Try again",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }else if (customerName!=null || customerName=="---Select Customer---") {
+        } else if (customerName==null || customerName.equals("---Select Customer---")) {
             JOptionPane.showMessageDialog(this,
                     "Please select the customer.",
                     "Try again",
                     JOptionPane.ERROR_MESSAGE);
             return;
-        }else if (orderInstructions.isEmpty()) {
+        } else if (orderInstructions.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Please confirm who received this order.",
                     "Try again",
                     JOptionPane.ERROR_MESSAGE);
             return;
-        } else if (productCode.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Please enter a valid product code.",
-                    "Try again",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        } else if (productQuantity.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Please enter the quantity of product required.",
-                    "Try again",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        } else if (productNotes.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Please input product notes or N/A.",
-                    "Try again",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        } else if (productDescription.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Please input product description or N/A.",
-                    "Try again",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }else if (orderStatus.isEmpty()) {
+        } else if (orderStatus.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Please input order status.",
                     "Try again",
                     JOptionPane.ERROR_MESSAGE);
             return;
-        }else if (orderCompletedBySignature!=null || Objects.equals(orderCompletedBySignature, "---Select Employee---")) {
+        }else if (orderCompletedBySignature.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Please confirm who completed this order.",
                     "Try again",
@@ -155,9 +221,8 @@ public class CreateOrderForm extends JDialog{
             return;
         }
 
-        order = addOrderToDatabase(orderReferenceNumber, customerReferenceNumber, productReferenceNumber, orderDate, scheduledDeliveryDate, orderReceivedBySignature,
-                customerName, orderStatus, orderInstructions, orderCompletedBySignature, orderCompletedDate,
-                productCode, productQuantity, productDescription, productNotes);
+        order = addOrderToDatabase(orderReferenceNumber, orderDate, scheduledDeliveryDate, orderReceivedBySignature,
+                customerName, orderStatus, orderInstructions, orderCompletedBySignature, orderCompletedDate);
         if (order != null) {
             dispose();
         } else {
@@ -170,11 +235,9 @@ public class CreateOrderForm extends JDialog{
 
     public Order order;
 
-    private Order addOrderToDatabase(String orderReferenceNumber, String customerReferenceNumber, String productReferenceNumber,
-                                     String orderDate, String scheduledDeliveryDate, String  orderReceivedBySignature,
+    private Order addOrderToDatabase(String orderReferenceNumber, String orderDate, String scheduledDeliveryDate, String  orderReceivedBySignature,
                                      String customerName, String orderStatus, String orderInstructions, String
-            orderCompletedBySignature, String orderCompletedDate, String productCode, String productQuantity, String
-            productDescription, String productNotes){
+            orderCompletedBySignature, String orderCompletedDate){
 
         Customer customer = null;
         Order order = null;
@@ -188,45 +251,27 @@ public class CreateOrderForm extends JDialog{
 
             //Input data entered as SQL Statement
             Statement stmt = conn.createStatement();
-            String sql = "INSERT INTO orders (orderReferenceNumber, orderDate, scheduledDeliveryDate, orderReceivedBySignature,\n" +
-                    "                customerName, orderStatus, orderInstructions, orderCompletedBySignature, orderCompletedDate,\n" +
-                    "                productCode, productQuantity, productDescription, productNotes, customerReferenceNumber, " +
-                    "productReferenceNumber) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+            String sql = "INSERT INTO orders (orderDate, scheduledDeliveryDate, employeeName, orderStatus, orderInstructions, businessName) " +
+                    "VALUES (?,?,?,?,?,?) ";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1,orderReferenceNumber);
-            preparedStatement.setString(2,orderDate);
-            preparedStatement.setString(3,scheduledDeliveryDate);
-            preparedStatement.setString(4,orderReceivedBySignature);
-            preparedStatement.setString(5,customerName);
-            preparedStatement.setString(6,orderStatus);
-            preparedStatement.setString(7,orderInstructions);
-            preparedStatement.setString(8,orderCompletedBySignature);
-            preparedStatement.setString(9,orderCompletedDate);
-            preparedStatement.setString(10,productCode);
-            preparedStatement.setString(11,productQuantity);
-            preparedStatement.setString(12,productDescription);
-            preparedStatement.setString(13,productNotes);
-            preparedStatement.setString(14,customerReferenceNumber);
-            preparedStatement.setString(15,productReferenceNumber);
+            preparedStatement.setString(1,orderDate);
+            preparedStatement.setString(2,scheduledDeliveryDate);
+            preparedStatement.setString(3,orderReceivedBySignature);
+            preparedStatement.setString(4,orderStatus);
+            preparedStatement.setString(5,orderInstructions);
+            preparedStatement.setString(6,customerName);
 
             //Insert row into Table
             int addedRows = preparedStatement.executeUpdate();
             if (addedRows > 0){
                 order = new Order();
                 order.orderReferenceNumber = orderReferenceNumber;
-                order.customerReferenceNumber = customerReferenceNumber;
-                order.productReferenceNumber = productReferenceNumber;
                 order.orderDate = orderDate;
                 order.scheduledDeliveryDate = scheduledDeliveryDate;
                 order.orderReceivedBySignature = orderReceivedBySignature;
                 order.customerName = customerName;
                 order.orderInstructions = orderInstructions;
                 order.orderStatus = orderStatus;
-                order.productCode = productCode;
-                order.productQuantity = productQuantity;
-                order.productDescription = productDescription;
-                order.productNotes = productNotes;
                 order.orderCompletedBySignature = orderCompletedBySignature;
                 order.orderCompletedDate = orderCompletedDate;
             }
@@ -239,31 +284,69 @@ public class CreateOrderForm extends JDialog{
     }
 
     private void showTable(){
-        Object[][] data = {
-                {"P001", 10, "Product 1 Description", "Notes 1", "With Designer"},
+
+        String productCode = "", productQuantity = "", productDescription = "", productNotes = "", productStatus = "";
+
+        final String DB_URL ="jdbc:mysql://localhost/cps?serverTimezone=UTC-4";
+        final String USERNAME ="root";
+        final String PASSWORD ="";
+        ResultSet rs = null;
+        Statement stmt = null;
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            //Connected to database successfully
+
+            //Input data entered as SQL Statement
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT productCode, quantity, description, notes, status FROM products");
+            int count = 1;
+            // Column names
+            String[] columnNames = {"Product Code", "Quantity", "Description", "Notes", "Status"};
+
+            // Set the model with dummy data
+            DefaultTableModel model = new DefaultTableModel(columnNames,0);
+            while (rs.next()) { // Check if there's a row
+                productCode = rs.getString("productCode");
+                productQuantity = rs.getString("quantity");
+                productDescription = rs.getString("description");
+                productNotes = rs.getString("notes");
+                productStatus = rs.getString("status");
+
+                Object[] data = {productCode, productQuantity, productDescription, productNotes, productStatus};
+                model.addRow(data);
+                count++;
+                //aSWSCSystem.out.println(productCode + productQuantity + productDescription + productNotes + productStatus);
+            }
+
+            productListTable.setModel(model);
+            TableColumnModel columns = productListTable.getColumnModel();
+            columns.getColumn(2).setMinWidth(250);
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            columns.getColumn(0).setCellRenderer(centerRenderer);
+            columns.getColumn(1).setCellRenderer(centerRenderer);
+            columns.getColumn(4).setCellRenderer(centerRenderer);
+            // Set table header alignment to center
+            JTableHeader tableHeader = productListTable.getTableHeader();
+            DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tableHeader.getDefaultRenderer();
+            headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+            headerRenderer.setFont(new Font("Arial", Font.BOLD, 23));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            try { if (rs != null) rs.close(); } catch (SQLException e) { /* log error */ }
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* log error */ }
+            try { if (conn != null) conn.close(); } catch (SQLException e) { /* log error */ }
+        }
+
+        /*Object[][] data = {
                 {"P002", 5, "Product 2 Description", "Notes 2", "Production"},
                 {"P003", 8, "Product 3 Description", "Notes 3", "With Spell Checker"},
                 {"P004", 12, "Product 4 Description", "Notes 4", "Completed"}
-        };
-
-        // Column names
-        String[] columnNames = {"Product Code", "Quantity", "Description", "Notes", "Status"};
-
-        // Set the model with dummy data
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-        productListTable.setModel(model);
-        TableColumnModel columns = productListTable.getColumnModel () ;
-        columns.getColumn (2).setMinWidth (250) ;
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer ();
-        centerRenderer.setHorizontalAlignment (JLabel. CENTER) ;
-        columns.getColumn (0).setCellRenderer (centerRenderer);
-        columns.getColumn (1).setCellRenderer (centerRenderer);
-        columns.getColumn (4).setCellRenderer (centerRenderer);
-        // Set table header alignment to center
-        JTableHeader tableHeader = productListTable.getTableHeader();
-        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tableHeader.getDefaultRenderer();
-        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        headerRenderer.setFont(new Font("Arial", Font.BOLD, 23));
+        };*/
 
     }
 

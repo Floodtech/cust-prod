@@ -14,5 +14,6 @@ public class Product {
     public String spellCheckedBy;
     public String spellCheckedByDate;
     public String production;
-    public String productionDate;
+   public String productionDate;
+    public String status;
 }

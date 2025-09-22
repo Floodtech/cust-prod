@@ -1,3 +1,5 @@
+import com.toedter.calendar.JCalendar;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +44,8 @@ public class CreateOrderForm extends JDialog{
     private JTextField employee1Field;
     private JTextField prodStatusField;
     private JLabel employee2Label;
+    private JLabel deliveryDateLabel;
+    private JLabel datePlacedLabel;
     private JTextField employee2Field;
     private JTextField orderCompletedDateField;
 
@@ -61,45 +65,42 @@ public class CreateOrderForm extends JDialog{
         saveButton.addActionListener((event) -> createOrder());
         addButton.addActionListener((event) -> createProduct());
         refNumField.setEditable(false);
-
-        //showTable();
-        setVisible(true);
     }
 
     public void createCustomerList() {
-        customerBox.insertItemAt("---Select Customer---", 0); // Inserts at the beginning
-        customerBox.setSelectedItem("---Select Customer---");
-
-        final String DB_URL ="jdbc:mysql://localhost/cps?serverTimezone=UTC-4";
-        final String USERNAME ="root";
-        final String PASSWORD ="";
-        ResultSet rs = null;
-        Statement stmt = null;
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            //Connected to database successfully
-
-            //Input data entered as SQL Statement
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT businessName FROM customers");
-            int count = 1;
-            while (rs.next()) { // Check if there's a row
-                String value1 = rs.getString("businessName");
-
-                // Populate your form fields (e.g., JTextField, JComboBox)
-                customerBox.insertItemAt(value1, count); // Adds each item
-                count++;
-                //System.out.println(value1);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        finally {
-            try { if (rs != null) rs.close(); } catch (SQLException e) { /* log error */ }
-            try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* log error */ }
-            try { if (conn != null) conn.close(); } catch (SQLException e) { /* log error */ }
-        }
+//        customerBox.insertItemAt("---Select Customer---", 0); // Inserts at the beginning
+//        customerBox.setSelectedItem("---Select Customer---");
+//
+//        final String DB_URL ="jdbc:mysql://localhost/cps?serverTimezone=UTC-4";
+//        final String USERNAME ="root";
+//        final String PASSWORD ="";
+//        ResultSet rs = null;
+//        Statement stmt = null;
+//        Connection conn = null;
+//        try {
+//            conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+//            //Connected to database successfully
+//
+//            //Input data entered as SQL Statement
+//            stmt = conn.createStatement();
+//            rs = stmt.executeQuery("SELECT businessName FROM customers");
+//            int count = 1;
+//            while (rs.next()) { // Check if there's a row
+//                String value1 = rs.getString("businessName");
+//
+//                // Populate your form fields (e.g., JTextField, JComboBox)
+//                customerBox.insertItemAt(value1, count); // Adds each item
+//                count++;
+//                //System.out.println(value1);
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        finally {
+//            try { if (rs != null) rs.close(); } catch (SQLException e) { /* log error */ }
+//            try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* log error */ }
+//            try { if (conn != null) conn.close(); } catch (SQLException e) { /* log error */ }
+//        }
 
     }
         public void createProduct() {
@@ -303,8 +304,8 @@ public class CreateOrderForm extends JDialog{
             int count = 1;
             // Column names
             String[] columnNames = {"Product Code", "Quantity", "Description", "Notes", "Status"};
-
             // Set the model with dummy data
+
             DefaultTableModel model = new DefaultTableModel(columnNames,0);
             while (rs.next()) { // Check if there's a row
                 productCode = rs.getString("productCode");
@@ -319,19 +320,27 @@ public class CreateOrderForm extends JDialog{
                 //aSWSCSystem.out.println(productCode + productQuantity + productDescription + productNotes + productStatus);
             }
 
-            productListTable.setModel(model);
-            TableColumnModel columns = productListTable.getColumnModel();
-            columns.getColumn(2).setMinWidth(250);
-            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-            columns.getColumn(0).setCellRenderer(centerRenderer);
-            columns.getColumn(1).setCellRenderer(centerRenderer);
-            columns.getColumn(4).setCellRenderer(centerRenderer);
-            // Set table header alignment to center
-            JTableHeader tableHeader = productListTable.getTableHeader();
-            DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tableHeader.getDefaultRenderer();
-            headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-            headerRenderer.setFont(new Font("Arial", Font.BOLD, 23));
+//            productListTable.setModel(model);
+
+            // Set the model with dummy data
+            productListTable.setRowHeight(40);
+            TableColumnModel tableColumnModel = productListTable.getColumnModel () ;
+            tableColumnModel.getColumn (2).setMinWidth (250) ;
+            DefaultTableCellRenderer tableCellRenderer = new DefaultTableCellRenderer ();
+            tableCellRenderer.setHorizontalAlignment (JLabel. CENTER) ;
+            tableColumnModel.getColumn (0).setCellRenderer (tableCellRenderer);
+            tableColumnModel.getColumn (1).setCellRenderer (tableCellRenderer);
+            tableColumnModel.getColumn (4).setCellRenderer (tableCellRenderer);
+
+        // Set table header alignment to center
+        JTableHeader tableHeader = productListTable.getTableHeader();
+        tableHeader.setPreferredSize(new Dimension(tableHeader.getWidth(), 30)); // Set height to 50
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tableHeader.getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tableHeader.setFont(new Font("Arial", Font.BOLD, 16));
+
+        //headerRenderer.setFont
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

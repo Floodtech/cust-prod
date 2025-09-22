@@ -24,7 +24,7 @@ public class AddCustomerForm extends JDialog {
         super(parent);
         setTitle("Create a new customer");
         setContentPane(rootPanel);
-        setMinimumSize(new Dimension(1100, 800));
+        setMinimumSize(new Dimension(1000, 450));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -41,7 +41,6 @@ public class AddCustomerForm extends JDialog {
                 createCustomer();
             }
         });
-        setVisible(true);
     }
 
     private void cancelActivity() {
@@ -158,11 +157,6 @@ public class AddCustomerForm extends JDialog {
     public static void main(String[] args) {
         // Set the Look and Feel (L&F) of UI
         String guiDesign = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
-        //Nimbus Look and Feel: "javax.swing.plaf.nimbus.NimbusLookAndFeel"
-        //Cross-platform (Metal): "javax.swing.plaf.metal.MetalLookAndFeel"
-        //Windows (Windows look): "com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
-        //Mac OS X Aqua (for Mac users): "com.apple.laf.AquaLookAndFeel"
-        //Motif: "com.sun.java.swing.plaf.motif.MotifLookAndFeel"
         try {
             UIManager.setLookAndFeel(guiDesign);
         } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
